@@ -1,0 +1,62 @@
+# CodeAgent-Bench Configuration
+# =============================
+
+benchmark:
+  name: "codeagent-bench-v0.1"
+  version: "0.1.0"
+
+# Task execution settings
+execution:
+  timeout_seconds: 120          # Max time per task
+  max_retries: 1                # Retries on transient failures
+  parallel_workers: 4           # Concurrent task executions
+  sandbox: true                 # Use Docker sandboxing
+
+# Scoring configuration
+scoring:
+  strategy: "weighted_test_pass" # Options: pass_at_k, weighted_test_pass, partial_credit
+  pass_at_k: 1                   # k value for pass@k metric
+  partial_credit_threshold: 0.5  # Minimum weighted score for partial credit
+
+# Statistical analysis
+statistics:
+  bootstrap_iterations: 10000   # Number of bootstrap samples
+  confidence_level: 0.95        # Confidence interval level
+  significance_level: 0.05      # p-value threshold for McNemar's test
+  min_tasks_for_significance: 30 # Minimum tasks required for statistical claims
+
+# Contamination detection
+contamination:
+  ngram_size: 8                 # N-gram size for overlap detection
+  jaccard_threshold: 0.15       # Flag tasks with Jaccard similarity above this
+  embedding_model: "text-embedding-3-small"
+  embedding_threshold: 0.85     # Cosine similarity threshold for embedding check
+  canary_enabled: true          # Inject canary strings into tasks
+
+# Agent configurations
+agents:
+  mock:
+    type: "mock"
+    description: "Mock agent for testing the harness"
+  
+  completions:
+    type: "completions"
+    model: "default"
+    temperature: 0.0
+    max_tokens: 4096
+    # Set LLM_BASE_URL and LLM_API_KEY env vars to point to your endpoint
+  
+  http:
+    type: "http"
+    model: "custom-model"
+    temperature: 0.0
+    max_tokens: 4096
+    # Set HTTP_AGENT_ENDPOINT and HTTP_AGENT_API_KEY env vars
+
+# Reporting
+reporting:
+  format: ["markdown", "json"]
+  include_per_task: true
+  include_category_breakdown: true
+  include_difficulty_curve: true
+  include_contamination_report: true

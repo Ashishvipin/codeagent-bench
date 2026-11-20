@@ -1,0 +1,26 @@
+version: "3.9"
+
+services:
+  benchmark-runner:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: codeagent-bench-runner
+    volumes:
+      - ./benchmarks:/home/benchrunner/codeagent-bench/benchmarks:ro
+      - ./results:/home/benchrunner/codeagent-bench/results
+      - ./configs:/home/benchrunner/codeagent-bench/configs:ro
+    environment:
+      - BENCH_TIMEOUT=${BENCH_TIMEOUT:-120}
+      - BENCH_MAX_MEMORY=${BENCH_MAX_MEMORY:-512m}
+      - LLM_API_KEY=${LLM_API_KEY:-}
+      - LLM_BASE_URL=${LLM_BASE_URL:-}
+    deploy:
+      resources:
+        limits:
+          memory: 2g
+          cpus: "2.0"
+    command: >
+      --tasks benchmarks/tasks/
+      --agent mock
+      --output results/docker_run.jsonl

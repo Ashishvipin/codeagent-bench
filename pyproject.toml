@@ -1,0 +1,65 @@
+[build-system]
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "codeagent-bench"
+version = "0.1.0"
+description = "A failure-driven benchmark framework for evaluating coding agents"
+readme = "README.md"
+license = {text = "Apache-2.0"}
+requires-python = ">=3.10"
+authors = [
+    {name = "Ashish Vipin Korumelli", email = "ashishvipin@example.com"},
+]
+keywords = ["benchmark", "llm", "coding-agents", "evaluation", "ai-safety"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: Apache Software License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+
+dependencies = [
+    "pandas>=2.0.0",
+    "numpy>=1.24.0",
+    "scipy>=1.10.0",
+    "pyyaml>=6.0",
+    "jsonschema>=4.17.0",
+    "docker>=7.0.0",
+    "click>=8.1.0",
+    "rich>=13.0.0",
+    "tqdm>=4.65.0",
+    "scikit-learn>=1.3.0",
+    "tiktoken>=0.5.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.4.0",
+    "pytest-cov>=4.1.0",
+    "ruff>=0.1.0",
+]
+
+[project.scripts]
+codeagent-bench = "scripts.run_benchmark:main"
+
+[project.urls]
+Homepage = "https://github.com/AshishVipin/codeagent-bench"
+Repository = "https://github.com/AshishVipin/codeagent-bench"
+Issues = "https://github.com/AshishVipin/codeagent-bench/issues"
+
+[tool.setuptools.packages.find]
+include = ["codeagent_bench*"]
+
+[tool.ruff]
+target-version = "py310"
+line-length = 100
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-v --tb=short"
