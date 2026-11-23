@@ -1,4 +1,4 @@
-# CodeAgent-Bench 🧪
+# CodeAgent-Bench 
 
 **A reproducible benchmark framework for evaluating coding agents on real-world failure cases.**
 
